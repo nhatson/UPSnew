@@ -92,11 +92,7 @@ class Ups extends \Magento\Sales\Block\Adminhtml\Order\View\Info
 
     public function getEgprint($orderId)
     {
-        if($this->_coreRegistry->registry('egprint'.$orderId) !== null) {
-            return $this->_coreRegistry->registry('egprint'.$orderId);
-        } else {
-            return '';
-        }
+        return $this->sessionManager->getData('egprint'.$orderId);
     }
 
     public function getOrderView($orderId)
@@ -152,6 +148,12 @@ class Ups extends \Magento\Sales\Block\Adminhtml\Order\View\Info
 
     public function fetchupsdata($orderId)
     {
-        $this->upsData->checkExist($oid,'nein');
-    }     
+        $this->upsData->checkExist($orderId,'nein');
+    }
+
+    public function removeEgprint($orderId)
+    {
+        return $this->sessionManager->unsetData('egprint'.$orderId);
+    }
+
 }

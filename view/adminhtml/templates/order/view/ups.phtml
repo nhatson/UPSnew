@@ -253,10 +253,12 @@ if ($block->getEgprint($oid) == 1 AND !empty($upsTrackData)) {
 	} else {
 		echo 'openONPopup();';
 	}  
-	echo 'window.location.assign(\''.$this->getUrl('*/*/view').'order_id/'.$order->getId().'\');}</script>';
+	echo '}</script>';
+	$block->removeEgprint($oid);
 }
 if ($block->getEgprint($oid) == 2 AND !empty($upsTrackDataRetour)) {
 	echo '<script type="text/javascript">
- 		window.onload = function(){openRPopup();window.location.assign(\''.$this->getUrl('*/*/view').'order_id/'.$order->getId().'\');}</script>';
+ 		window.onload = function(){openRPopup();}</script>';
+ 	$block->removeEgprint($oid);
 }
 ?>

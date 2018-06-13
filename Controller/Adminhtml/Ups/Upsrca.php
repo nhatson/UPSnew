@@ -36,6 +36,8 @@ class Upsrca extends \Bss\Ups\Controller\Adminhtml\Ups
     {
         if ($order = $this->_initOrder()) {   
             $this->ups();
+            $oid = $order->getId();
+            $this->sessionManager->setData('egprint'.$oid, 2);
             $this->_redirect('sales/order/view', array('order_id' => $order->getId(),'egprint' => 2));
         }
     }     
