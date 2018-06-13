@@ -1,0 +1,262 @@
+
+<?php
+/* 
+ * $block  EuroGreens\UpsLabelPrint\Block\Adminhtml\Sales\Order\View\Ups
+ *
+*/
+
+$order = $block->getOrder();
+$oid = $order->getId();
+
+echo 
+	"
+		<script type=\"text/javascript\">
+	        function openNPopup () {
+	                mywin=window.open(\"".$this->getUrl('ups/ups/upslpn')."order_id/".$oid."\",\"print\",\"menubar=no,toolbar=no,scrollbars=yes,width=595,height=842\");
+	                mywin.onload=function() {
+					mywin.blur();
+					window.focus();
+	                    mywin.print();
+	                    mywin.close();
+	                };
+				
+			}
+	        function openONPopup () {
+	                mywin=window.open(\"".$this->getUrl('ups/ups/upslp')."order_id/".$oid."\",\"print\",\"menubar=no,toolbar=no,scrollbars=yes,width=595,height=842\");
+	                mywin.onload=function() {
+					 mywin.blur();
+					 window.focus();                    
+	                };
+				
+			}
+			function openRPopup () {
+	                mywin=window.open(\"".$this->getUrl('ups/ups/upslpr')."order_id/".$oid."\",\"print\",\"menubar=no,toolbar=no,scrollbars=yes,width=595,height=842\");
+	                mywin.onload=function() {
+	                   mywin.blur();
+					window.focus();
+	                };
+				
+			}
+		
+		</script>
+	";
+ ?>
+  <script type="text/javascript">
+    //<![CDATA[
+    
+		function changeState(){
+			 if(confirm("Wirklich den Status wechseln?")){
+				location.href = "<?php echo $this->getUrl('ups/ups/changestatus'); ?>order_id/<?php echo $order->getId(); ?>/state/"+document.getElementById('state_new').value;
+			}
+		}
+	
+        function link_ups(choice){
+            
+            var check_error ="";
+            var link_buffer ="";
+            
+            switch(choice){                
+                case "rate":{
+                    if(document.getElementById('upsrate_anzahl').value != "" && document.getElementById('upsrate_anzahl').value >0 && document.getElementById('upsrate_gewicht').value != "" && document.getElementById('upsrate_gewicht').value >0 && !isNaN(document.getElementById('upsrate_gewicht').value) && !isNaN(document.getElementById('upsrate_anzahl').value)){
+						(document.getElementsByName('nach')[0].checked == true)? nach = 'ja': nach = 'nein';
+                        (document.getElementsByName('paketart')[0].checked == true)? paketart = 'einzel': paketart = 'mehr';
+                        link_buffer = "<?php echo $this->getUrl('ups/ups/view'); ?>order_id/<?php echo $order->getId(); ?>/zipcode/<?php echo $order->getShippingAddress()->getpostcode(); ?>/country_id/<?php echo $order->getShippingAddress()->getCountry_id(); ?>/count/"+document.getElementById('upsrate_anzahl').value+"/weight_total/"+document.getElementById('upsrate_gewicht').value+"/paketart/"+paketart+"/nach/"+nach;                           
+                    }
+                    else{check_error = "Bitte erst das Gesamtgewicht und die Paketanzahl hinterlegen!";}
+
+                    break;
+                }
+                case "ship":{                        
+                    var nach="";
+                    var paketart="";
+                        if(document.getElementById('upsrate_anzahl').value != "" && document.getElementById('upsrate_anzahl').value >0 && document.getElementById('upsrate_gewicht').value != "" && document.getElementById('upsrate_gewicht').value >0 && !isNaN(document.getElementById('upsrate_gewicht').value) && !isNaN(document.getElementById('upsrate_anzahl').value)){
+                            (document.getElementsByName('nach')[0].checked == true)? nach = 'ja': nach = 'nein';
+                            (document.getElementsByName('paketart')[0].checked == true)? paketart = 'einzel': paketart = 'mehr';
+                            link_buffer = "<?php echo $this->getUrl('ups/ups/upspa'); ?>order_id/<?php echo $order->getId(); ?>/paketanzahl/"+document.getElementById('upsrate_anzahl').value+"/paketkilo/"+document.getElementById('upsrate_gewicht').value+"/nach/"+nach+"/paketart/"+paketart;                           
+                        }else{alert("Bitte erst das Gesamtgewicht und die Paketanzahl hinterlegen!")}
+                   
+                    break;
+                }
+                case "retour":{
+                    var nach="";
+                    var paketart="";
+                        if(document.getElementById('upsrate_anzahl').value != "" && document.getElementById('upsrate_anzahl').value >0 && document.getElementById('upsrate_gewicht').value != "" && document.getElementById('upsrate_gewicht').value >0 && !isNaN(document.getElementById('upsrate_gewicht').value) && !isNaN(document.getElementById('upsrate_anzahl').value)){
+                            (document.getElementsByName('nach')[0].checked == true)? nach = 'ja': nach = 'nein';
+                            (document.getElementsByName('paketart')[0].checked == true)? paketart = 'einzel': paketart = 'mehr';
+                            link_buffer = "<?php echo $this->getUrl('ups/ups/upsrca'); ?>order_id/<?php echo $order->getId(); ?>/paketanzahl/"+document.getElementById('upsrate_anzahl').value+"/paketkilo/"+document.getElementById('upsrate_gewicht').value+"/nach/"+nach+"/paketart/"+paketart+"/retour/1"; 
+                        }else{alert("Bitte erst das Gesamtgewicht und die Paketanzahl hinterlegen!")}
+                    
+                    break;
+                }
+                case "cancel":{                    
+                    	link_buffer = "<?php echo $this->getUrl('ups/ups/upsps'); ?>order_id/<?php echo $order->getId(); ?>/storno/ups"; 
+                    break;
+                }
+                case "cancel_retour":{
+                      	link_buffer = "<?php echo $this->getUrl('ups/ups/upsrcs'); ?>order_id/<?php echo $order->getId(); ?>/storno/retour";
+                    break;
+                }
+            }
+           
+           if(check_error ==""){
+          
+               location.href = link_buffer;
+           }else{
+               alert(check_error);
+           }
+           
+           
+           
+        }
+   
+    //]]>
+    </script>
+<style>
+.ups {line-height: 25px; border 1px solid grey; background-color:#f9f7f7; margin-bottom: 25px; padding:10px 5px;}
+.ups div.label { width:50%; float:left }
+.ups div.value { width:50%; float:left }
+.ups .clear {clear:both;}	
+</style>
+<?php 
+//folgende Variablen müssen erstmal vergeben werden.... kann dann erst aktiviert werden
+ $ups_message = $block->getUpsMessages($oid);
+ $upsTrackDataRetour = $block->getUpsTrackDataRetour($oid);
+ $upsTrackData = $block->getUpsTrackData($oid);
+?>
+
+<section>
+<div class="ups" >
+	<h2>UPS Paketscheine anfordern</h2>
+<!-- <table cellspacing="0" class="form-list"> -->
+
+	<div class="label">&nbsp;</div>
+	<div class="value"><button class="scalable" type="button" style="cursor:pointer;"  onclick="link_ups('rate')"><span>Paketpreise abfragen</span></button></div>
+	<div class="clear"></div>
+	
+	<div class="label"><label>Anzahl Pakete:</label></div>
+	<div class="value"><input name="upsrate_anzahl" id="upsrate_anzahl" value="<?php if($this->getRequest()->getParam('count')){ echo $this->getRequest()->getParam('count'); }else{ echo '1'; } ?>" type="text" size="5"  value=""></div>
+	<div class="clear"></div>
+
+	<div class="label"><label>Einzelgewicht in Kg</label></div>
+	<div class="value"><input type="text" name="upsrate_gewicht" id="upsrate_gewicht" value="<?php if($this->getRequest()->getParam('weight_total')) { echo $this->getRequest()->getParam('weight_total'); }else{ echo '14'; } ?>"></div>
+	<div class="clear"></div>
+
+	<div class="label"><label>Wert der Sendung</label></div>
+	<div class="value"><?php echo number_format($order->getGrandTotal(), 2, ',', '.'); ?> &euro;</div>
+	<div class="clear"></div>
+
+	<div class="label"><label>Einzelpaketesendung?</label></div>
+	<?php $nn=''; $popup = '';
+	if($order->getPayment()->getMethod()=="phoenix_cashondelivery"){ $nn='ja';}  
+	?>
+	<div class="value">ja<input type="radio" value="einzel" name="paketart" id="paketart" <?php if(($this->getRequest()->getParam('paketart')==='einzel') ){ echo 'checked="checked"';} ?>> &nbsp;
+					nein<input type="radio" value="mehr" name="paketart" id="paketart" <?php if($this->getRequest()->getParam('paketart')==='mehr' || ($nn== 'ja')|| ($this->getRequest()->getParam('paketart')=='') ) { echo 'checked="checked"'; }  ?>></div>
+	<div class="clear"></div>
+	
+	<div class="label"><label>Nachnahme?</label></div>	
+	
+
+	<div class="value">ja<input type="radio"value="ja" name="nach" id="nach"  <?php if($nn=='ja'){echo 'checked="checked"'; }?>> &nbsp; nein<input type="radio" value="nein" name="nach" id="nach" <?php if(empty($nn)){ echo 'checked="checked"'; } ?>></div>
+	<div class="clear" style="margin-bottom:5px;"></div>
+
+<?php
+// UPS Preisabfrage
+if(!empty($ups_message)){ ?>
+	<div><?php echo $ups_message; ?></div>
+<div class="clear"></div>
+<?php }?>
+
+	<div class="label">
+		<?php if(empty($upsTrackDataRetour)){ ?>
+			 <button class="scalable" type="button"  onclick="link_ups('retour')"><span>Retourscheine anfordern</span></button>
+		<?php }else{ ?>
+		 <button class="scalable" type="button"  onclick="openRPopup()"><span>UPS Retourscheine drucken</span></button>
+		<?php }	?>
+	</div>
+	<div class="value">
+<?php if(empty($upsTrackData)){ ?>
+			  <button class="scalable" type="button"  onclick="link_ups('ship')"><span>Paketscheine anfordern</span></button>
+<?php }else{?>
+	<?php if($nn== 'ja'){ $popup = 'openNPopup()'; } else { $popup = 'openONPopup()'; }  ?>
+	<button class="scalable" type="button"  onclick="<?php echo $popup; ?>"><span>UPS Paketscheine drucken</span></button>
+<?php } ?>                                   
+	</div>
+<div class="clear"></div>
+<!-- </table> -->
+<!-- </div> -->
+
+<?php  if(!empty($upsTrackData) || !empty($upsTrackDataRetour)){  ?>
+<!-- <div class="entry-edit"> -->
+	<div class="entry-edit-head">
+		<h4 class="icon-head head-account">Informationen zu den angeforderten UPS Paketscheinen</h4>
+    </div>
+	<div class="fieldset">
+		<div class="hor-scroll">
+			<!-- <table cellspacing="0" class="form-list"> -->
+			<div class="label"><label>Paketart:</label></div>
+			<div class="value"><?php if(!empty($upsTrackData)) echo $upsTrackData['paketart']; ?> <?php if(!empty($upsTrackDataRetour)) echo(" ( ".$upsTrackDataRetour['paketart']." ) "); ?></div>
+			<div class="clear"></div>
+
+			<div class="label"><label>Anzahl Pakete:</label></div>
+			<div class="value"><?php if(!empty($upsTrackData))echo $upsTrackData['paketanzahl']; ?> <?php if(!empty($upsTrackDataRetour)) echo(" ( ".$upsTrackDataRetour['paketanzahl']." ) "); ?></div>
+			<div class="clear"></div>
+
+			<div class="label"><label>Gewicht Einzelpaket:</label></div>
+			<div class="value"><?php if(!empty($upsTrackData))echo $upsTrackData['paketkilo']; ?> Kg <?php if(!empty($upsTrackDataRetour)) echo(" ( ".$upsTrackDataRetour['paketkilo']." ) "); ?></div>
+			<div class="clear"></div>
+
+			<div class="label"><label>Nachnahme:</label></div>
+			<div class="value"><?php  if(!empty($upsTrackData))echo $upsTrackData['nach']; ?> <?php if(!empty($upsTrackDataRetour)) echo(" ( ".$upsTrackDataRetour['nach']." ) "); ?></div>
+			<div class="clear"></div>
+
+			<div class="label"><label>Paketnummern:</label></div>
+			<div class="value"><?php if(!empty($upsTrackData))echo $upsTrackData['paketnummer']; ?> <?php if(!empty($upsTrackDataRetour)) echo(" ( ".$upsTrackDataRetour['paketnummer']." ) "); ?></div>
+			<div class="clear"></div>
+
+			<div class="label"><label>Kosten (ohne Nachnahme):</label></div>
+			<div class="value"><?php if(!empty($upsTrackData))echo $upsTrackData['kosten']; ?> <?php if(!empty($upsTrackDataRetour)) echo(" ( ".$upsTrackDataRetour['kosten']." ) "); ?></div>
+			<div class="clear"></div>
+
+			<div class="label"><label>Paketart:</label></div>
+			<div class="value"><?php if(!empty($upsTrackData)) echo $upsTrackData['paketart']; ?> <?php if(!empty($upsTrackDataRetour)) echo(" ( ".$upsTrackDataRetour['paketart']." ) "); ?></div>
+			<div class="clear"></div>
+
+			<div class="label">
+			<?php if(!empty($upsTrackDataRetour)){ ?>
+				<button class="scalable" type="button"  onclick="link_ups('cancel_retour')"><span>Retourscheine stornieren</span></button>
+			<?php } else {echo '&nbsp;';}?>
+			</div>
+			<div class="value">
+			<?php if(!empty($upsTrackData)){ ?>
+				<button class="scalable" type="button"  onclick="link_ups('cancel')"><span>Paketscheine stornieren</span></button>
+			<?php } ?>
+			</div>
+			 <div class="clear"></div>
+			<!-- </table> -->
+		</div>
+	</div>
+<!-- </div> -->
+ <?php } ?>
+</section>
+<?php 
+if ($block->getEgprint($oid) == 1 AND !empty($upsTrackData)) {
+
+	$a_ups = $block->fetchupsdata($oid);
+
+
+	echo '<script type="text/javascript">
+ 		window.onload = function(){';
+	
+	if ($a_ups[0]['nach'] == 'ja') {
+
+		echo 'openNPopup();';
+	} else {
+		echo 'openONPopup();';
+	}  
+	echo 'window.location.assign(\''.$this->getUrl('*/*/view').'order_id/'.$order->getId().'\');}</script>';
+}
+if ($block->getEgprint($oid) == 2 AND !empty($upsTrackDataRetour)) {
+	echo '<script type="text/javascript">
+ 		window.onload = function(){openRPopup();window.location.assign(\''.$this->getUrl('*/*/view').'order_id/'.$order->getId().'\');}</script>';
+}
+?>

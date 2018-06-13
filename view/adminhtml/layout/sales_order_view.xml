@@ -1,0 +1,10 @@
+<?xml version="1.0"?> 
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="order_info">
+            <block class="Bss\Ups\Block\Adminhtml\Sales\Order\View\Ups" name="ups_order_view" template="Bss_Ups::order/view/ups.phtml">
+            </block>
+        </referenceContainer>
+		<move element="ups_order_view" destination="order_info" before="-" />
+    </body>
+</page>

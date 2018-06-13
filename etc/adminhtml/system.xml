@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<!--
+**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_Ups
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="bss" translate="label" sortOrder="300">
+            <label><![CDATA[Bss Commerce]]></label>
+        </tab>
+        <section id="upsconfig" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>UPS</label>
+            <tab>bss</tab>
+            <resource>Bss_UpsConfig::config</resource>
+            <group id="zugangsdaten" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"  showInStore="1">
+                <label>Zugangsdaten</label>
+                <field id="ups_key"  translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>UPS Key</label>
+                </field>
+				<field id="ups_userid" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>User Id</label>
+				</field>
+				<field id="ups_password" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Passwort</label>
+				</field>
+				<field id="ups_accesskey" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Access Key</label>
+				</field>
+				<field id="ups_shipperaccount" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Shipper Account</label>
+				</field>
+			</group>
+			<group id="pfade" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Pfade</label>
+				<field id="ups_testmode" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Test Mode</label>
+				</field>
+				<field id="ups_urlshipconfirm" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>UrlShipConfirm</label>
+				</field>
+				<field id="ups_urlshipaccept" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>UrlShipAccept</label>
+				</field>
+				<field id="ups_urlshipvoid" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>UrlShipVoid</label>
+				</field>
+				<field id="ups_urlshipconfirmtest" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>UrlShipConfirm Test</label>
+				</field>
+				<field id="ups_urlshipaccepttest" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>UrlShipAccept Test</label>
+				</field>
+				<field id="ups_urlshipvoidtest" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>UrlShipVoid Test</label>
+				</field>
+				<field id="ups_preisabfrage" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Pfad Preisabfrage</label>
+				</field>
+			</group>
+			<group id="versender" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Versender</label>
+				<field id="ups_name" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Name</label>
+				</field>
+				<field id="ups_telefon" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Telefon</label>
+				</field>
+				<field id="ups_strasse" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Strasse / Hnr.</label>
+				</field>
+				<field id="ups_plz" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>PLZ</label>
+				</field>
+				<field id="ups_ort" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Ort</label>
+				</field>
+				<field id="ups_countrycode" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Ländercode</label>
+				</field>
+			</group>
+			<group id="versandvon" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Versand von</label>
+				 <field id="ups_firma" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Firma</label>
+				</field>
+				<field id="ups_angezeigtername" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Angezeigter Name</label>
+				</field>
+				<field id="ups_telefon2" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Telefon</label>
+				</field>
+				<field id="ups_strasse2" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Strasse / Hnr.</label>
+				</field>
+				<field id="ups_plz2" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>PLZ</label>
+				</field>
+				<field id="ups_ort2" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Ort</label>
+				</field>
+				<field id="ups_countrycode2" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Ländercode</label>
+				</field>
+            </group>
+        </section>
+    </system>
+</config>
