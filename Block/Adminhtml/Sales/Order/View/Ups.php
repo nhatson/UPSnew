@@ -148,7 +148,7 @@ class Ups extends \Magento\Sales\Block\Adminhtml\Order\View\Info
 
     public function fetchupsdata($orderId)
     {
-        $this->upsData->checkExist($orderId,'nein');
+        return $this->upsData->checkExist($orderId,'nein');
     }
 
     public function removeEgprint($orderId)
