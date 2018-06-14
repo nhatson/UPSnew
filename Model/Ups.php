@@ -623,7 +623,7 @@ class Ups
         		$xmlfile = $xml["ShipmentAcceptResponse_ShipmentResults_PackageResults"][$i]->TrackingNumber[0]."_response.xml";
         		$trackingnumber = $xml["ShipmentAcceptResponse_ShipmentResults_PackageResults"][$i]->TrackingNumber[0];
         		$CODfile = $xml["ShipmentAcceptResponse_ShipmentResults_PackageResults"][$i]->TrackingNumber[0]."_COD.html";
-        		$CODImage = isset($xml["ShipmentAcceptResponse_ShipmentResults_CODTurnInPage_Image"][$i]->GraphicImage[0])?$xml["ShipmentAcceptResponse_ShipmentResults_CODTurnInPage_Image"][$i]->GraphicImage[0]:null;
+        		$CODImage = isset($xml["ShipmentAcceptResponse_ShipmentResults_CODTurnInPage_Image"][$i]->GraphicImage[1])?$xml["ShipmentAcceptResponse_ShipmentResults_CODTurnInPage_Image"][$i]->GraphicImage[1]:null;
 				
         		$gif = base64_decode($label);
         		$gif2 = base64_decode($label2);
