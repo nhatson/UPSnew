@@ -127,6 +127,7 @@ echo
 <section>
 <div class="ups" >
 	<h2>UPS Paketscheine anfordern</h2>
+	<?php var_dump($block->fetchupsdata($oid)); ?>
 <!-- <table cellspacing="0" class="form-list"> -->
 
 	<div class="label">&nbsp;</div>
@@ -147,7 +148,7 @@ echo
 
 	<div class="label"><label>Einzelpaketesendung?</label></div>
 	<?php $nn=''; $popup = '';
-	if($order->getPayment()->getMethod()=="phoenix_cashondelivery"){ $nn='ja';}  
+	if($order->getPayment()->getMethod()=="cashondelivery"){ $nn='ja';}  
 	?>
 	<div class="value">ja<input type="radio" value="einzel" name="paketart" id="paketart" <?php if(($this->getRequest()->getParam('paketart')==='einzel') ){ echo 'checked="checked"';} ?>> &nbsp;
 					nein<input type="radio" value="mehr" name="paketart" id="paketart" <?php if($this->getRequest()->getParam('paketart')==='mehr' || ($nn== 'ja')|| ($this->getRequest()->getParam('paketart')=='') ) { echo 'checked="checked"'; }  ?>></div>

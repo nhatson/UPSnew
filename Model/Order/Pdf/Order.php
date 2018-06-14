@@ -39,8 +39,8 @@ class Order extends Shipment {
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-	protected $label_path = "";
-	protected $jpg_label_path = "";
+	public $label_path = "";
+	public $jpg_label_path = "";
 	protected $logo_path = "";
 	protected $item_data = array();
 	protected $directory;
