@@ -25,12 +25,30 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\InputException;
 use Psr\Log\LoggerInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\App\Filesystem\DirectoryList;
 
 class Upslpn extends \Magento\Sales\Controller\Adminhtml\Order
 {
     protected $pdfOrder;
+
     protected $upsData;
+
     protected $storeManager;
+
+    /**
+     * File check
+     *
+     * @var \Magento\Framework\Filesystem\Io\File
+     */
+    protected $ioFile;
+
+    /**
+     * File system
+     *
+     * @var \Magento\Framework\Filesystem
+     */
+    protected $filesystem;
+
     /**
      * Constructor.
      *
@@ -50,12 +68,16 @@ class Upslpn extends \Magento\Sales\Controller\Adminhtml\Order
         LoggerInterface $logger,
         \Bss\Ups\Model\Order\Pdf\Order $pdfOrder,
         \Bss\Ups\Model\ResourceModel\UpsData $upsData,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        \Magento\Framework\Filesystem\Io\File $ioFile,
+        \Magento\Framework\Filesystem $filesystem
     ) {
         parent::__construct($context, $coreRegistry, $fileFactory, $translateInline, $resultPageFactory, $resultJsonFactory, $resultLayoutFactory, $resultRawFactory, $orderManagement, $orderRepository, $logger);
         $this->pdfOrder = $pdfOrder;
         $this->upsData = $upsData;
         $this->storeManager = $storeManager;
+        $this->ioFile = $ioFile;
+        $this->filesystem = $filesystem;
     }
 
     public function execute()
@@ -96,7 +118,7 @@ class Upslpn extends \Magento\Sales\Controller\Adminhtml\Order
             // $if_ups_data = $connection->fetchAll($select_ups);
             $if_ups_data = $this->upsData->checkExist($order->getId(), 'nein');
 
-            //$base_url = Mage::getBaseUrl('web', true);
+            $base_url = $this->storeManager->getStore()->getBaseUrl();
             
             // UPS-Daten durchlaufen
             foreach($if_ups_data as $ud){
@@ -116,13 +138,16 @@ class Upslpn extends \Magento\Sales\Controller\Adminhtml\Order
                     $imageFile = $label_path. '/'.$p.'.gif';
 
                     // Images vorhanden?
-                    if (file_exists($imageFile)) {                      
+                    if (file_exists($imageFile)) {
+                        $path = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath('bss/ups/');
+                        $this->ioFile->checkAndCreateFolder($path);
+                        $newfile = $path.$p.'.gif';
+                        $this->ioFile->cp($imageFile, $newfile);
                         // Label laden
                         $html .= '<div class="a4pages">'.str_replace(
                                 './label'.$p.'.gif',
-                                $label_path. '/'.$p.".gif",                           
+                                $base_url. '/media/bss/ups/'.$p.'.gif',
                                 implode(" ",file($label_path. '/'.$p.'.html'))).'</div>';
-                        
                         //Wenn Nachnahme und letztes Label
                         if($b_cod =='ja' AND $package_count == $counter){
                             // Html String aufbereiten und Nachnahmeschein laden
@@ -152,8 +177,7 @@ class Upslpn extends \Magento\Sales\Controller\Adminhtml\Order
 //                          javascript:window.print(); 
 //                          window.parent.Windows.close(\'browser_window\');
 //                      </script>';
-            
-            echo $html;         
+            echo $html;
             // history anpassen
             // Versendemail schicken            
             $this->pdffinish($order->getId());  
